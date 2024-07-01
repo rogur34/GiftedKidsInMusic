@@ -73,8 +73,7 @@
             })
             .then(response => response.json())
             .then(data => {
-                alert('Form submitted successfully');
-                form.reset();
+                window.location.href = "thankyou.html";
             })
             .catch(error => {
                 alert('There was an error submitting the form');
@@ -84,3 +83,4 @@
     </script>
 </body>
 </html>
+
