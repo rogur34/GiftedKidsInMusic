@@ -138,50 +138,26 @@
         </div>
     </div>
     <script>
-        functionLet's finalize the updated code snippet, ensuring all the form fields align correctly and the form submission works as expected.
-
-### Updated Google Apps Script
-
-Ensure all form fields are correctly referenced and mapped to the spreadsheet columns:
-
-```javascript
-function doPost(e) {
-  const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName('Form Logs');
-  if (!sheet) {
-    throw new Error("Sheet 'Form Logs' not found");
-  }
-
-  const row = [
-    new Date(),                     // Date
-    e.parameter.goal || '',         // About your kid
-    e.parameter.name || '',         // Name
-    e.parameter.age || '',          // Kid's Age
-    e.parameter.email || '',        // Email
-    e.parameter.phone || '',        // Phone Number
-    e.parameter.start || '',        // Starting
-    e.parameter.budget || '',       // Budget
-    e.parameter.additional || ''    // Other services
-  ];
-  sheet.appendRow(row);
-
-  const jsonOutput = JSON.stringify({ 'result': 'success', 'row': row });
-
-  return ContentService.createTextOutput(jsonOutput).setMimeType(ContentService.MimeType.JSON);
-}
-
-function testDoPost() {
-  const e = {
-    parameter: {
-      goal: "Goal text",
-      name: "Test Name",
-      age: "10",
-      email: "test@example.com",
-      phone: "1234567890",
-      start: "this week",
-      budget: "$60 - $80 per week (1 class/week) Regular",
-      additional: "Piano"
-    }
-  };
-  const result = doPost(e);
-  Logger.log(result.getContent());
-}
+        function submitForm(event) {
+            event.preventDefault();
+            const form = document.getElementById('signupForm');
+            fetch(form.action, {
+                method: 'POST',
+                body: new FormData(form),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    window.location.href = 'https://rogur34.github.io/GiftedKidsInMusic/thankyou.html';
+                } else {
+                    alert('There was an error submitting the form. Please try again.');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                alert('There was an error submitting the form. Please try again.');
+            });
+        }
+    </script>
+</body>
+</html>
